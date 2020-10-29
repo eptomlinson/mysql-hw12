@@ -27,7 +27,7 @@ function viewAll() {
         console.log("\n\n")
         console.table(result)
     })
-}
+};
 
 function viewRole(){
     let query = `SELECT roles.id, title, salary, deptName
@@ -39,7 +39,7 @@ function viewRole(){
         console.log("\n\n");
         console.table(result);
     })
-}
+};
 
 function viewDepartment(){
     let query = `SELECT department.id, department.deptName
@@ -49,14 +49,14 @@ function viewDepartment(){
         console.log("\n\n");
         console.table(result);
     })
-}
+};
 
 function addDepartment(param){
     let query = `INSERT INTO department(deptName)
     VALUES(?)`
     connection.query(query, [param], (err, result) =>{
         if(err) throw err;
-        console.log("\n\nDocuments Have been Added!");
+        console.log("\n\nDeptartment has been added!");
     })
 };
 
@@ -65,9 +65,18 @@ function addRole(title, salary, deptID){
     VALUES(?,?,?)`
     connection.query(query, [title, salary, deptID], (err, result) => {
         if(err) throw err;
-        console.log("\n\nDocuments Have been Added!");
+        console.log("\n\nRole has been added!");
     })
-}
+};
+
+function addEmployee(first_name, last_name, role_id){
+    let query = `INSERT INTO employees(first_name, last_name, role_id)
+    VALUES(?,?,?)`
+    connection.query(query, [first_name, last_name, role_id], (err, result) =>{
+        if (err) throw err;
+        console.log("\n\nEmployee has been added!");
+    })
+};
 
 function begin() {
     inquirer.prompt([
@@ -106,7 +115,7 @@ function begin() {
             ]).then(secondChoice => {
                 addDepartment(secondChoice.newDept);
                 begin();
-            })
+            });
         }else if(initialChoice.choice == "Add a new role"){
             inquirer.prompt([
                 {
@@ -126,9 +135,35 @@ function begin() {
                 }
             ]).then(secondChoice => {
                 addRole(secondChoice.title, parseInt(secondChoice.salary), parseInt(secondChoice.deptID))
-                begin()
+                begin();
+            });
+        }else if(initialChoice.choice == "Add a new employee"){
+            inquirer.prompt([
+                {
+                    type: "input",
+                    message: "What is the new employee's first name?",
+                    name: "first_name"
+                },
+                {
+                    type: "input",
+                    message: "What is the new employee's last name?",
+                    name: "last_name"
+                },
+                {
+                    type: "input",
+                    message: "What is the new employee's role ID?",
+                    name: "role_id"
+                },
+                {
+                    type: "input",
+                    message: "Who is the employee's manager? Use manager ID as answer:",
+                    name: "manager_id"
+                }
+            ]).then(secondChoice => {
+                addEmployee(secondChoice.first_name, secondChoice.last_name, parseInt(secondChoice.role_id), parseInt(secondChoice.manager_id))
+                begin();
             })
         }
     })
-}
+};
 begin();

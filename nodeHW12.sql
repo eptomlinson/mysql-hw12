@@ -21,6 +21,7 @@ id INT NOT NULL AUTO_INCREMENT,
 first_name VARCHAR(40),
 last_name VARCHAR (40),
 role_id INT,
+manager_id INT,
 PRIMARY KEY (id),
 foreign key (role_id) references roles(id)
 );
