@@ -69,10 +69,10 @@ function addRole(title, salary, deptID){
     })
 };
 
-function addEmployee(first_name, last_name, role_id){
-    let query = `INSERT INTO employees(first_name, last_name, role_id)
-    VALUES(?,?,?)`
-    connection.query(query, [first_name, last_name, role_id], (err, result) =>{
+function addEmployee(first_name, last_name, role_id, manager_id){
+    let query = `INSERT INTO employees(first_name, last_name, role_id, manager_id)
+    VALUES(?,?,?,?)`
+    connection.query(query, [first_name, last_name, role_id, manager_id], (err, result) =>{
         if (err) throw err;
         console.log("\n\nEmployee has been added!");
     })
