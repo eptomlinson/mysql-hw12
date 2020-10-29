@@ -70,10 +70,12 @@ function addRole(title, salary, deptID){
 };
 
 function addEmployee(first_name, last_name, role_id, manager_id){
-    let query = `INSERT INTO employees(first_name, last_name, role_id, manager_id)
+    console.log(first_name, last_name, role_id, manager_id);
+    let query = `INSERT INTO employee(first_name, last_name, role_id, manager_id)
     VALUES(?,?,?,?)`
+    console.log(query);
     connection.query(query, [first_name, last_name, role_id, manager_id], (err, result) =>{
-        if (err) throw err;
+        if (err) console.log(err);;
         console.log("\n\nEmployee has been added!");
     })
 };
@@ -160,6 +162,7 @@ function begin() {
                     name: "manager_id"
                 }
             ]).then(secondChoice => {
+                console.log(secondChoice);
                 addEmployee(secondChoice.first_name, secondChoice.last_name, parseInt(secondChoice.role_id), parseInt(secondChoice.manager_id))
                 begin();
             })
