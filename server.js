@@ -80,10 +80,10 @@ function addEmployee(first_name, last_name, role_id, manager_id) {
     })
 };
 
-function updateRoles(title, salary, department_id) {
-    let query = `UPDATE roles(title, salary, department_id)
-SET(title,salary,department_id) = VALUES(?,?,?) WHERE title = ()`
-    connection.query(query, [title, salary, department_id], (err, result) => {
+function updateRoles(role_id) {
+    let query = `UPDATE employee(role_id)
+SET ? WHERE ?`
+    connection.query(query, [role_id], (err, result) => {
         if (err) console.log(err);
         console.log("\n\nEmployee role has been updated!");
     })
@@ -179,21 +179,11 @@ function begin() {
             inquirer.prompt([
                 {
                     type: "update",
-                    message: "What title are you updating?",
-                    name: "title"
+                    message: "Which employee's role are you updating?",
+                    name: "role_id"
                 },
-                {
-                    type: "update",
-                    message: "What salary are you updating?",
-                    name: "salary"
-                },
-                {
-                    type: "update",
-                    message: "What department ID are you updating?",
-                    name: "department_id"
-                }
             ]).then(secondChoice => {
-                updateRoles(secondChoice.title, parseInt(secondChoice.salary), parseInt(secondChoice.department_id));
+                updateRoles(parseInt(secondChoice.role_id));
                 begin();
             })
         }
