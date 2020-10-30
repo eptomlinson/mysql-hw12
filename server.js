@@ -81,8 +81,7 @@ function addEmployee(first_name, last_name, role_id, manager_id) {
 };
 
 function updateRoles(role_id) {
-    let query = `UPDATE employee(role_id)
-SET ? WHERE ?`
+    let query = `UPDATE employee SET role_id = ? WHERE id = ()`
     connection.query(query, [role_id], (err, result) => {
         if (err) console.log(err);
         console.log("\n\nEmployee role has been updated!");
@@ -100,14 +99,14 @@ function begin() {
                 "Add a new employee",
                 "View all departments",
                 "View all roles",
-                "View all Employees",
+                "View all employees",
                 "Update an employee's role"
             ],
             name: "choice"
         }
     ]).then(initialChoice => {
         // console.log(initialChoice)
-        if (initialChoice.choice == "View all Employees") {
+        if (initialChoice.choice == "View all employees") {
             begin();
             viewAll();
         } else if (initialChoice.choice == "View all roles") {
